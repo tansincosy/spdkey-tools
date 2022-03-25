@@ -4,7 +4,7 @@ describe('empty test', () => {
     expect(isEmpty(null)).toBeTruthy();
   });
 
-  it('it is false',()=>{
-    expect(isEmpty({name:1})).toBeFalsy()
-  })
+  it('it is false', () => {
+    expect(isEmpty({ name: 1 })).toBeFalsy();
+  });
 });
