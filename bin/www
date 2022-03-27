@@ -67,11 +67,13 @@ function onError(error) {
   switch (error.code) {
     case 'EACCES':
       log.error(bind, ' requires elevated privileges');
+      console.log('bind');
       process.exit(1);
     case 'EADDRINUSE':
       log.error(bind, ' is already in use');
       process.exit(1);
     default:
+      log.error(error);
       throw error;
   }
 }

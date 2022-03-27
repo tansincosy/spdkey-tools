@@ -19,18 +19,14 @@ const log4jConfig = {
       keepFileExt: true,
       layout: {
         type: 'pattern',
-        pattern: '[%d{yyyy-MM-dd hh:mm:ss.SSS}] [%p] [%c] - %m',
+        pattern: '[%d{yyyy-MM-dd hh:mm:ss.SSS}] [%p] - %m',
       },
     },
   },
   categories: {
     default: {
-      appenders: ['access'],
+      appenders: ['access', 'console'],
       level: config.log.level || 'info',
-    },
-    console: {
-      appenders: ['console'],
-      level: config.app.env === 'development' ? 'debug' : 'off',
     },
   },
 };
