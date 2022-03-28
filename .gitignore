@@ -1,5 +1,7 @@
 /dist
 /node_modules
+/demo
+/app_config
 
 # Logs
 logs
@@ -24,7 +26,6 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-
 # IDEs and editors
 /.idea
 .project
@@ -33,3 +34,5 @@ lerna-debug.log*
 *.launch
 .settings/
 *.sublime-workspace
+
+/prisma

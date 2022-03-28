@@ -8,6 +8,10 @@ const md5 = (value) => {
   const md5Hash = crypto.createHash('md5');
   return md5Hash.update(value).digest('hex');
 };
+
+const camelToSnakeCase = (str) =>
+  str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
+
 function encryptedWithPbkdf2(userPassword) {
   // 盐值随机
   const salt = crypto.randomUUID();
@@ -29,4 +33,5 @@ module.exports = {
   mask,
   md5,
   encryptedWithPbkdf2,
+  camelToSnakeCase,
 };
