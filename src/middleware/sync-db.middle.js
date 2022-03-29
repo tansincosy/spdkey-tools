@@ -17,5 +17,5 @@ module.exports = async (ctx, next) => {
       log.error('sync db error, error = ', error);
     })) || {};
   log.info('sync generate client, stdout = ', result.stdout);
-  next();
+  await next();
 };

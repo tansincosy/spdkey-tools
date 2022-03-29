@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const { resolve } = require('path');
 const log = require('../utils/log4j').getLogger('create-db.middle');
+const { PRISMA_FILE_PATH } = require('../constant/constant');
 
 const main = async (ctx, next) => {
   const { db } = ctx.request.body;
@@ -8,7 +9,7 @@ const main = async (ctx, next) => {
   const prismaDBUrl = `mysql://${db.user}:${db.password}@${db.host}:${db.port}/${db.dataBase}`;
 
   const sourceDir = resolve(process.cwd(), 'demo');
-  const targetDir = resolve(process.cwd(), 'prisma');
+  const targetDir = resolve(process.cwd(), PRISMA_FILE_PATH);
 
   log.info('start copy files');
 
@@ -38,7 +39,7 @@ const main = async (ctx, next) => {
 
   log.info('set db url success');
 
-  next();
+  await next();
 };
 
 module.exports = main;

@@ -19,7 +19,7 @@ const log4jConfig = {
       keepFileExt: true,
       layout: {
         type: 'pattern',
-        pattern: '[%d{yyyy-MM-dd hh:mm:ss.SSS}] [%p] - %m',
+        pattern: '[%d{yyyy-MM-dd hh:mm:ss.SSS}] [%p] [%c] - %m',
       },
     },
   },
