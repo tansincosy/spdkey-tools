@@ -51,6 +51,7 @@ module.exports = async (ctx, next) => {
   await fs.emptyDir(resolve(process.cwd(), PRISMA_FILE_PATH));
 
   // todo: 拷贝文件到主体服务中，启动服务，清空临时文件夹，测试与主服务进度，关闭服务
+  // 超级用户可以不创建，通过主服务的seed.js来创建
 
   await next();
 };

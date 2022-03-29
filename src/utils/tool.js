@@ -1,7 +1,5 @@
 const crypto = require('crypto');
 
-const algorithm = 'aes-256-cbc';
-const iv = crypto.randomBytes(16);
 const isEmpty = (val) => val == null || !(Object.keys(val) || val).length;
 const mask = (cc, num = 4, mask = '*') =>
   cc.slice(-num).padStart(cc.length, mask);
@@ -30,21 +28,6 @@ function encryptedWithPbkdf2(userPassword) {
     });
   });
 }
-function encrypt(key, text) {
-  // Creating Cipheriv with its parameter
-  const cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
-
-  // Updating text
-  let encrypted = cipher.update(text);
-
-  // Using concatenation
-  encrypted = Buffer.concat([encrypted, cipher.final()]);
-
-  // Returning iv and encrypted data
-  const ivStr = iv.toString('hex');
-  const encryptedData = encrypted.toString('hex');
-  return `${encryptedData}:${ivStr}`;
-}
 
 module.exports = {
   isEmpty,
@@ -52,5 +35,4 @@ module.exports = {
   md5,
   encryptedWithPbkdf2,
   camelToSnakeCase,
-  encrypt,
 };
