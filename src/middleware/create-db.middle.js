@@ -1,21 +1,24 @@
-const fs = require('fs-extra');
 const { resolve } = require('path');
 const log = require('../utils/log4j').getLogger('create-db.middle');
 const { PRISMA_FILE_PATH } = require('../constant/constant');
+const shell = require('shelljs');
 
 const main = async (ctx, next) => {
   const { db } = ctx.request.body;
   log.info('start set db url');
   const prismaDBUrl = `mysql://${db.user}:${db.password}@${db.host}:${db.port}/${db.dataBase}`;
 
-  const sourceDir = resolve(process.cwd(), 'demo');
+  const sourceDir = resolve(process.cwd(), 'demo/*');
   const targetDir = resolve(process.cwd(), PRISMA_FILE_PATH);
 
-  log.info('start copy files');
+  log.info('start copy files', targetDir);
 
-  await fs.copy(sourceDir, targetDir).catch((error) => {
-    log.error('error = ', error);
-  });
+  if (!shell.test('-e', targetDir)) {
+    log.warn(`${targetDir} is not found ,then create`);
+    shell.mkdir('-p', targetDir);
+  }
+
+  shell.cp(sourceDir, targetDir);
 
   log.info('start replace db url');
 
@@ -23,19 +26,7 @@ const main = async (ctx, next) => {
 
   log.info('start replace db url, editFile = ', editFile);
 
-  let fileContent = await fs.readFile(editFile, 'utf8').catch((error) => {
-    log.error('readFile = ', error);
-  });
-
-  fileContent = fileContent.replace(
-    /env\("DATABASE_URL"\)/g,
-    `"${prismaDBUrl}"`,
-  );
-
-  log.info('start replace db url  fileContent');
-  await fs.writeFile(editFile, fileContent).catch((error) => {
-    log.error('writeFile = ', error);
-  });
+  shell.sed('-i', /env\("DATABASE_URL"\)/g, `"${prismaDBUrl}"`, editFile);
 
   log.info('set db url success');
 
