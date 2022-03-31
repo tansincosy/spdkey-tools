@@ -4,8 +4,7 @@ const createCrypto = require('../middleware/create-crypto.middle');
 const createDB = require('../middleware/create-db.middle');
 const syncDB = require('../middleware/sync-db.middle');
 const setTemp = require('../middleware/set-tmp-file.middle');
-const firstValidate = require('../schema/fist-login.schema');
-const log = require('../utils/log4j').getLogger('router.js');
+const params = require('../middleware/params.middle');
 
 router.get('/', async (ctx, next) => {
   ctx.body = {
@@ -17,19 +16,7 @@ router.get('/', async (ctx, next) => {
 
 router.post(
   '/first-login',
-  async (ctx, next) => {
-    const valid = firstValidate(ctx.request.body);
-    if (!valid) {
-      log.error('first-login error, valid = ', firstValidate.errors);
-      ctx.response.status = 400;
-      ctx.body = {
-        code: '400',
-        message: '参数错误',
-      };
-      return;
-    }
-    await next();
-  },
+  params,
   createCrypto,
   createDB,
   syncDB,

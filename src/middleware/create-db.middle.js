@@ -2,13 +2,14 @@ const { resolve } = require('path');
 const log = require('../utils/log4j').getLogger('create-db.middle');
 const { PRISMA_FILE_PATH } = require('../constant/constant');
 const shell = require('shelljs');
+const config = require('../config');
 
 const main = async (ctx, next) => {
   const { db } = ctx.request.body;
   log.info('start set db url');
   const prismaDBUrl = `mysql://${db.user}:${db.password}@${db.host}:${db.port}/${db.dataBase}`;
 
-  const sourceDir = resolve(process.cwd(), 'demo/*');
+  const sourceDir = resolve(process.cwd(), config.prisma.file_path);
   const targetDir = resolve(process.cwd(), PRISMA_FILE_PATH);
 
   log.info('start copy files', targetDir);

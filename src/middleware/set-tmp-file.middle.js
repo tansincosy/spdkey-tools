@@ -40,7 +40,6 @@ module.exports = async (ctx, next) => {
   log.info('begin copy prisma file');
 
   shell.cp(resolve(process.cwd(), PRISMA_FILE_PATH, '*'), targetDir);
-
   shell.rm('-rf', resolve(process.cwd(), PRISMA_FILE_PATH));
 
   // todo: 拷贝文件到主体服务中，启动服务，清空临时文件夹，测试与主服务进度，关闭服务
